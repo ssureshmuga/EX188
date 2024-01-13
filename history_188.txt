@@ -1,0 +1,237 @@
+    1  podman -v
+    2  podman network ls
+    3  podman network inspect 2f259bab93aa 
+    4  podman network create mynet
+    5  podman network inspect mynet
+    6  podman login -u developer -p developer registry.lab.example.com:8443
+    7  podman login -u developer -p developer https://registry.lab.example.com:8443
+    8  podman login -u developer -p developer https://registry.ocp4.example.com:8443
+    9  podman images
+   10  podman search https://registry.ocp4.example.com:8443
+   11  podman search https://registry.ocp4.example.com:8443/
+   12  podman search registry.ocp4.example.com:8443/
+   13  podman pull registry.redhat.io/rhel8/httpd-24
+   14  podman login registry.redhat.io/rhel8/httpd-24
+   15  podman pull registry.redhat.io/rhel8/httpd-24
+   16  podman images
+   17  podman ps
+   18  podman ps -a
+   19  podman run -d --name myhttpd fe3272f7ed1a
+   20  podman ps
+   21  podman inspect 386c1a33e6b8
+   22  podman inspect 386c1a33e6b8 | grep network
+   23  podman inspect 386c1a33e6b8 | grep 10.88.
+   24  podman inspect myhttpd
+   25  podman inspect myhttpd | grep network
+   26  podman inspect myhttpd | grep 10.88.0
+   27  podman network connect mynet myhttpd
+   28  podman rm myhttpd -f
+   29  podman run -d --name myhttpd fe3272f7ed1a --net mynet
+   30  podman inspect myhttpd | grep 10.89
+   31  podman inspect myhttpd | grep network
+   32  podman inspect myhttpd | grep ipv4
+   33  podman inspect myhttpd | grep ip
+   34  podman inspect myhttpd | grep ipv
+   35  podman inspect myhttpd 
+   36  podman images
+   37  podman ps -a
+   38  podman start myhttpd
+   39  podman ps -a
+   40  podman run -p 8001:8080 myhttpd
+   41  podman ps -a
+   42  podman stop myhttpd
+   43  podman rm myhttpd
+   44  podman ps -a
+   45  podman run -d --name myhttpd -p 8001:8080 fe3272f7ed1a
+   46  podman ps
+   47  podman port myhttpd
+   48  curl localhost:8001
+   49  podman run -d --name myhttpd1 -p :8080 fe3272f7ed1a
+   50  podman port myhttpd1
+   51  vim index.html
+   52  podman cp index.html myhttpd:/var/www/html/index.html
+   53  curl localhost:8001
+   54  podman cp myhttpd1:/var/www/html/ .
+   55  ls
+   56  cat index.html 
+   57  podman cp myhttpd1:/var/www/html/index.html file.html
+   58  podman cp myhttpd:/var/www/html/index.html file.html
+   59  cat file.html 
+   60  podman stop myhttpd
+   61  podman ps myhttpd
+   62  podman ps -a
+   63  podman create run -d --name myhttpd2 -p 8002:8080 fe3272f7ed1a
+   64  podman create run -d --name myhttpd2 -p 8002:8080 registry.redhat.io/rhel8/httpd-24
+   65  podman create run -d --name myhttpd2 -p 8002:8080 registry.redhat.io/rhel8/httpd-24:latest
+   66  podman images
+   67  podman create -d --name myhttpd2 -p 8002:8080 fe3272f7ed1a
+   68  podman create --name myhttpd2 -p 8002:8080 fe3272f7ed1a
+   69  podman ps
+   70  podman ps -a
+   71  podman start myhttpd2
+   72  podman ps -a
+   73  curl localhost:8002
+   74  lsns
+   75  podman exec -it myhttpd
+   76  podman exec -it myhttpd /bin/bash
+   77  podman exec -it myhttpd1 /bin/bash
+   78  podman images
+   79  podman login quay.io
+   80  podman tag fe3272f7ed1a quay.io/ssureshmuga/httpd-24:latest
+   81  podman images
+   82  podman push quay.io/ssureshmuga/httpd-24
+   83  podman push quay.io/ssureshmuga/httpd-24:latest
+   84  podman push fe3272f7ed1a
+   85  podman tag fe3272f7ed1a quay.io/ssureshmuga/httpd
+   86  podman images
+   87  podman push quay.io/ssureshmuga/httpd
+   88  podman tag registry.redhat.io/rhel8/httpd-24:latest quay.io/ssureshmuga/httpd-24:latest
+   89  podman images
+   90  podman push quay.io/ssureshmuga/httpd-24:latest
+   91  podman rmi -af
+   92  podman tag registry.redhat.io/rhel8/httpd-24:latest quay.io/ssureshmuga/httpd-24:latest
+   93  podman pulll registry.redhat.io/rhel8/httpd-24
+   94  podman pull registry.redhat.io/rhel8/httpd-24
+   95  podman login -u ssureshmuga registry.redhat.io
+   96  podman pull registry.redhat.io/rhel8/httpd-24
+   97  podman tag registry.redhat.io/rhel8/httpd-24:latest quay.io/ssureshmuga/httpd-24:latest
+   98  podman push quay.io/ssureshmuga/httpd-24:latest
+   99  podman login -u ssureshmuga quay.io
+  100  podman push quay.io/ssureshmuga/httpd-24:latest
+  101  podman images
+  102  podman push quay.io/ssureshmuga/httpd-24
+  103  podman push -u ssureshmuga quay.io/ssureshmuga/httpd-24:latest
+  104  podman images
+  105  podman search httpd
+  106  podman pull docker.io/dockette/apache
+  107  podman images
+  108  podman tag docker.io/dockette/apache quay.io/ssureshmuga/apache
+  109  podman push quay.io/ssureshmuga/apache
+  110  podman save -o apache.tar docker.io/dockette/apache
+  111  ls
+  112  podman rmi -af
+  113  podman images
+  114  podman load -i apache.tar 
+  115  podman images
+  116  podman volume ls
+  117  podman volume create myvol
+  118  podman volume inspect myvol
+  119  vim Containerfile
+  120  podman build -t suresh_image .
+  121  vim Containerfile
+  122  podman build -t suresh_image .
+  123  podman login -u ssureshmuga registry.redhat.io
+  124  podman build -t suresh_image .
+  125  podman pull registry.redhat.io/ubi8/ubi8
+  126  podman pull registry.redhat.io/ubi8/ubi8:latest
+  127  podman search ubi8
+  128  vim Containerfile 
+  129  podman build -t suresh_image .
+  130  podman images 
+  131  podman run -d --name myapache -p 8001:80 suresh_image
+  132  curl localhost:8001
+  133  podman ps
+  134  podman ps -a
+  135  podman logs myapache
+  136  cat Containerfile 
+  137  podman rmi -af
+  138  vim Containerfile 
+  139  podman build -t suresh_image .
+  140  podman search ubi8
+  141  vim Containerfile 
+  142  podman build -t suresh_image .
+  143  podman run -d --name myapache -p 8001:80 suresh_image
+  144  curl localhost:8001
+  145  podman ps -a
+  146  podman logs myapache
+  147  cat Containerfile 
+  148  podman rmi -af
+  149  vim Containerfile 
+  150  podman build -t suresh_image .
+  151  podman run -d --name myapache -p 8001:80 suresh_image
+  152  podman ps
+  153  curl localhost:8001
+  154  cp Containerfile Containerfile1
+  155  vim Containerfile1 
+  156  podman build -t suresh_image1 --file Containerfile1 
+  157  podman run -d --name myapache1 -p 8002:80 suresh_image1
+  158  curl localhost:8002
+  159  cp Containerfile1 Containerfile2
+  160  vim Containerfile2 
+  161  podman build -t suresh_image2 --file Containerfile2
+  162  vim Containerfile2
+  163  podman build -t suresh_image2 --file Containerfile2
+  164  vim Containerfile2
+  165  podman build -t suresh_image2 --file Containerfile2
+  166  vim Containerfile2
+  167  podman build -t suresh_image2 --file Containerfile2
+  168  vim Containerfile
+  169  vim Containerfile2
+  170  podman build -t suresh_image2 --file Containerfile2
+  171  vim Containerfile2
+  172  podman build -t suresh_image2 --file Containerfile2
+  173  podman run -d --name myapache2 -p 8003:80 -e MYVAR="FORSCHER" suresh_image2
+  174  curl localhost:8003
+  175  podman run -d --name myapache3 -p 8004:80 -e myvar="FORSCHER" suresh_image3
+  176  vim Containerfile2
+  177  podman build -t suresh_image3 --file Containerfile2
+  178  podman run -d --name myapache3 -p 8004:80 -e MYVAR="FORSCHER" suresh_image3
+  179  curl localhost:8004
+  180  podman rmi -af
+  181  cat Containerfile2
+  182  podman build -t suresh_image1 --file Containerfile2
+  183  podman run -d --name myapache1 -p 8001:80 -e MYVAR="FORSCHER" suresh_image1
+  184  curl localhost:8001
+  185  podman run -d --name myapache1 -p 8002:80 -e MYVAR=FORSCHER suresh_image1
+  186  podman run -d --name myapache2 -p 8002:80 -e MYVAR=FORSCHER suresh_image1
+  187  curl localhost:8002
+  188  cat Containerfile2
+  189  vim Containerfile2
+  190  podman build -t suresh_image2 --file Containerfile2
+  191  podman run -d --name myapache3 -p 8003:80 -e MYVAR=FORSCHER suresh_image2
+  192  curl localhost:8003
+  193  lab start custom-rootless 
+  194  cd $HOME/DO188/labs/custom-rootless/gitea
+  195  ll
+  196  cat Containerfile 
+  197  podman build -t gitea .
+  198  podman images
+  199  sudo podman images
+  200   sudo $HOME/DO188/labs/custom-rootless/ids.sh
+  201  cat $HOME/DO188/labs/custom-rootless/ids.sh
+  202  podman run --rm -p 3030:3030 gitea
+  203  sudo podman run --name root-gitea -p 3030:3030 --rm gitea
+  204  podman images
+  205  podman rmi localhost/suresh_image2 localhost/suresh_image1 docker.io/redhat/ubi8 
+  206  podman rmi localhost/suresh_image2 localhost/suresh_image1 docker.io/redhat/ubi8 -f
+  207  podman images
+  208  cd
+  209  podman rmi -af
+  210  sudo podman images
+  211   cd $HOME/DO188/labs/custom-rootless/gitea
+  212  sudo podman rmi -af
+  213  sudo podman images
+  214  podman images
+  215  podman rmi -af
+  216  podman images
+  217  cd
+  218  lab finish custom-rootless 
+  219  podman images
+  220  podman volume ls
+  221  podman volume rm myvol
+  222  podman volume ls
+  223  podman images
+  224  podman volume prune 
+  225  podman volume ls
+  226  podman volume rm myvol -f
+  227  podman images
+  228  sudo podman volume rm myvol -f
+  229  podman images
+  230  sudo podman rmi -af
+  231  podman images
+  232  podman ps -a
+  233  podman rm -af
+  234  sudo podman rm -af
+  235  podman images
+  236  history
+  237  history > history_188.txt
